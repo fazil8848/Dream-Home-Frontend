@@ -27,7 +27,7 @@ function Login() {
     if (userInfo) {
       navigate("/");
     }
-  }, [navigate, userInfo]);
+  }, [userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -37,6 +37,7 @@ function Login() {
         return;
       }
       const res = await login({ email, password }).unwrap();
+      console.log(res);
       if (res.error) {
         generateError(res.error);
       } else {
@@ -44,6 +45,7 @@ function Login() {
         navigate("/");
       }
     } catch (err) {
+      console.log(err);
       generateError(err?.data?.message || err.error);
     }
   };
