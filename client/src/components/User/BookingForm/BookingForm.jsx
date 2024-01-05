@@ -118,8 +118,7 @@ const BookingForm = () => {
   }
 
   const initialOptions = {
-    clientId:
-      "AZSlMeNIRx4_Zv2-E9yIZMr8gKS0zcgb3bQqruIm5wvAXwXwiAn9QFHRBKladpqZwqVrauDQnZyX-2Hq",
+    clientId: process.env.REACT_APP_PAYPAL_CLIENT_ID,
     currency: "USD",
     intent: "capture",
   };
