@@ -8,6 +8,7 @@ import Spinner from "../Spinner/Spinner";
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
+import { GrUserAdmin } from "react-icons/gr";
 
 function OwnerLogin() {
   const [email, setEmail] = useState("");
@@ -88,24 +89,31 @@ function OwnerLogin() {
 
   return (
     <>
-      <div className="min-h-[94vh] bg-loginBg bg-cover bg-center flex justify-center items-center">
-        <div className=" md:flex gap-5 w-4/6 md:w-3/6 px-10 py-6 bg-white-50 rounded-lg shadow-md">
+      <div className="min-h-[94vh] bg-gray-50 flex justify-center items-center">
+        <div className=" md:flex gap-5 w-4/6 md:w-3/6 px-10 py-6 bg-white rounded-lg shadow-md">
           <div className="w-full lg:w-1/2">
             <div>
               <div className="mb-6">
                 <div className=" ml-6 pt-10 font-semibold text-[#252525] text-2xl leading-[48px]">
                   Log in
                 </div>
-                <div className=" flex ml-8">
-                  <div className="font-promt text-[#696969] text-base">
-                    Not a User...?
+                <div className="flex px-3 items-center h-5 justify-between">
+                  <div className=" flex ">
+                    <div className="font-promt text-[#696969]  text-sm">
+                      Not a User...?
+                    </div>
+                    <Link
+                      to={"/owner/signup"}
+                      className="font-normal text-[#333333]  text-sm ml-2 underline"
+                    >
+                      Sign up
+                    </Link>
                   </div>
-                  <Link
-                    to={"/owner/signup"}
-                    className="font-normal text-[#333333] text-base ml-2 underline"
-                  >
-                    Sign up
-                  </Link>
+                  <div>
+                    <Link to={"/admin/login"} className=" text-gray-500">
+                      <GrUserAdmin />
+                    </Link>
+                  </div>
                 </div>
               </div>
               <div className="h-0.5 bg-blue-100 "></div>
@@ -165,7 +173,7 @@ function OwnerLogin() {
             <div className=" w-full flex justify-center gap-1 my-2 h-12 items-center">
               <div
                 onClick={() => loginGoogle()}
-                className=" flex justify-center items-center hover:text-black hover:bg-white bg-black px-10 py-2 text-white border rounded-md font-light font-poppins"
+                className=" flex justify-center items-center hover:text-black hover:bg-white bg-black px-8 py-2 text-white border rounded-md font-light font-poppins"
               >
                 Signup With <FcGoogle />
               </div>
