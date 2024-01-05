@@ -36,7 +36,9 @@ function OwnerLogin() {
       if (email.trim() === "" || password.trim() === "") {
         return toast.error("Please fill out all the fields");
       }
+      console.log("herere");
       const res = await login({ email, password }).unwrap();
+
       console.log(res);
       if (res._id) {
         dispatch(setOwnerCredentials(res));
