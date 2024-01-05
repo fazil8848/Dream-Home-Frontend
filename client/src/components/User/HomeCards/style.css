@@ -1,0 +1,22 @@
+
+.card::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+    display: none;
+}
+
+/* Optional: Style for the scrollbar track */
+/* .card::-webkit-scrollbar-track {
+    background: #f1f1f1;
+} */
+
+/* Optional: Style for the scrollbar handle */
+/* .card::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+} */
+
+/* Optional: Style for the scrollbar handle on hover */
+/* .card::-webkit-scrollbar-thumb:hover {
+    background: #555;
+} */
