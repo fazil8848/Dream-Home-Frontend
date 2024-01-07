@@ -73,7 +73,10 @@ const NotificationListingOwner = () => {
 
                 {noti.link && (
                   <Button
-                    onClick={navigate(noti.link)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate(noti.link);
+                    }}
                     className={
                       " bg-white hover:bg-black text-black hover:text-white"
                     }
