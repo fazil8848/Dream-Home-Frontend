@@ -28,7 +28,7 @@ export default function VideoCall() {
     );
 
     setLink(
-      "http://localhost:3000/owner/videocall/6551e295fa910977a5e6bc35/" +
+      "https://www.walkwise.shop/owner/videocall/6551e295fa910977a5e6bc35" +
         "?roomID=" +
         roomID
     );
