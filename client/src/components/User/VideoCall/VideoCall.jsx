@@ -27,11 +27,7 @@ export default function VideoCall() {
       userInfo.name
     );
 
-    setLink(
-      "https://www.walkwise.shop/owner/videocall/6551e295fa910977a5e6bc35" +
-        "?roomID=" +
-        roomID
-    );
+    setLink("/owner/videocall/" + roomID + "?roomID=" + roomID);
 
     const zp = ZegoUIKitPrebuilt.create(kitToken);
     zp.joinRoom({
@@ -70,8 +66,7 @@ export default function VideoCall() {
   };
 
   useEffect(() => {
-    sendNotification();
+    if (roomID !== userInfo._id) sendNotification();
   }, [link]);
-
   return <div ref={myMeeting} style={{ width: "90vw", height: "90vh" }}></div>;
 }
