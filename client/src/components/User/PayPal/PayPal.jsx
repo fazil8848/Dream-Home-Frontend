@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const PayPal = ({ property, paymentDone, setPaymentDone }) => {
   const createOrder = async (data, actions) => {
+    console.log(data, "createOrder Data");
     const cost = Math.floor(property.property_rent / 80);
 
     return fetch(`${process.env.REACT_APP_USERS_URL}/orders`, {
@@ -40,11 +41,9 @@ const PayPal = ({ property, paymentDone, setPaymentDone }) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        // console.error("Error capturing PayPal order:", errorData);
         generateError("Error capturing PayPal order");
-        // Handle the error or throw an exception
       } else {
-        const responseData = await response.json(); // Assuming the response contains JSON data
+        const responseData = await response.json();
         if (responseData.status === "COMPLETED") {
           generateSuccess("Payment successful");
           setPaymentDone(true);
