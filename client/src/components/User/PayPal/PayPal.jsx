@@ -3,7 +3,6 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import { generateError, generateSuccess } from "../../Dependencies/toast";
 import { useNavigate } from "react-router-dom";
 
-
 const PayPal = ({ property, paymentDone, setPaymentDone }) => {
   const createOrder = async (data, actions) => {
     const cost = Math.floor(property.property_rent / 80);
@@ -25,6 +24,7 @@ const PayPal = ({ property, paymentDone, setPaymentDone }) => {
 
   const onApprove = async (data, actions) => {
     try {
+      console.log(data, "dataa");
       const response = await fetch(
         `${process.env.REACT_APP_USERS_URL}/orders/${data.orderID}/capture`,
         {

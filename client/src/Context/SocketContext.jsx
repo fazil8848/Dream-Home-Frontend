@@ -33,6 +33,10 @@ export const SocketContextProvider = ({ children }) => {
       query,
     });
 
+    // const newSocket = io("http://localhost:5000", {
+    //   query,
+    // });
+
     setSocket(newSocket);
 
     newSocket.on("getOnlineUsers", (users) => {
