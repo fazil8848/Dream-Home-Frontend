@@ -18,6 +18,7 @@ import {
 } from "../../../Redux/Slices/chatSlices/userChatSlice";
 import { useSocket } from "../../../Context/SocketContext";
 import { VscBell } from "react-icons/vsc";
+import { toast } from "react-toastify";
 
 const OwnerHeader = ({ sidebarOpen, setSidebarOpen }) => {
   const [logoutCall] = useOwnerLogoutMutation();
@@ -68,7 +69,9 @@ const OwnerHeader = ({ sidebarOpen, setSidebarOpen }) => {
   useEffect(() => {
     const handleNewNotification = async (notifications) => {
       try {
-        console.log(notifications);
+        toast("New Notification Recieved", {
+          position: "top-center",
+        });
         setOwnerNotification(notifications);
       } catch (error) {
         console.error(error);

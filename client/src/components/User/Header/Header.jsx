@@ -18,6 +18,7 @@ import {
   setUserOnline,
 } from "../../../Redux/Slices/chatSlices/userChatSlice";
 import { useSocket } from "../../../Context/SocketContext";
+import { toast } from "react-toastify";
 
 const Header = () => {
   const { socket, notification, setNotification } = useSocket();
@@ -64,8 +65,10 @@ const Header = () => {
   useEffect(() => {
     const handleNewNotification = async (notifications) => {
       try {
-        console.log(notifications);
         setNotification(notifications);
+        toast("New Notification Recieved", {
+          position: "top-center",
+        });
       } catch (error) {
         console.error(error);
         generateError(error.message);
