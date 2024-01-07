@@ -31,7 +31,7 @@ const NotificationListing = () => {
   return (
     <>
       <div className="w-screen flex justify-center py-10 min-h-screen">
-        <div className="w-full flex flex-col gap-2 lg:w-1/3 md:w-1/2 bg-white border rounded-md shadow-lg h-[36rem] p-10 ">
+        <div className="w-full flex flex-col gap-2 lg:w-1/3 md:w-2/3 bg-white border rounded-md shadow-lg h-[36rem] p-10 ">
           <div className="mb-5">
             <h3 className="text-xl">Notifications</h3>
           </div>
