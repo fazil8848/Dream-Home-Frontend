@@ -1,6 +1,6 @@
 import React from "react";
 import { useSocket } from "../../../Context/SocketContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { generateError, generateSuccess } from "../../Dependencies/toast";
 import { useMarkNotificationAsReadMutation } from "../../../Redux/Slices/userApi/usersApiSlice";
 import { useSelector } from "react-redux";
