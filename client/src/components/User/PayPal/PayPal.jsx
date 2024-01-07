@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 const PayPal = ({ property, paymentDone, setPaymentDone }) => {
   const createOrder = async (data, actions) => {
-    console.log(data, "createOrder Data");
     const cost = Math.floor(property.property_rent / 80);
 
     return fetch(`${process.env.REACT_APP_USERS_URL}/orders`, {
@@ -19,8 +18,14 @@ const PayPal = ({ property, paymentDone, setPaymentDone }) => {
         },
       }),
     })
-      .then((response) => response.json())
-      .then((order) => order.id);
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((order) => {
+        console.log(order);
+        return order.id;
+      });
   };
 
   const onApprove = async (data, actions) => {
