@@ -1,12 +1,13 @@
 import React from "react";
 import { useSocket } from "../../../Context/SocketContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { generateError, generateSuccess } from "../../Dependencies/toast";
 import { useMarkNotificationAsReadMutation } from "../../../Redux/Slices/userApi/usersApiSlice";
 import { useSelector } from "react-redux";
 import { Button } from "@material-tailwind/react";
 
 const NotificationListing = () => {
+  const navigate = useNavigate();
   const { notification, setNotification } = useSocket();
   const [markAsReadCall] = useMarkNotificationAsReadMutation();
   const { userInfo } = useSelector((state) => state.user);
@@ -62,8 +63,13 @@ const NotificationListing = () => {
                     {noti.read ? "Read" : "Mark Read"}
                   </Button>
                   {noti.link && (
-                    <Button className=" ">
-                      <Link to={noti.link}>Join</Link>
+                    <Button
+                      onClick={navigate(noti.link)}
+                      className={
+                        " bg-white hover:bg-black text-black hover:text-white"
+                      }
+                    >
+                      Join
                     </Button>
                   )}
                 </div>

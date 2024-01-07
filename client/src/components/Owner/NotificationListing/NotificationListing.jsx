@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { Button } from "@material-tailwind/react";
 
 const NotificationListingOwner = () => {
+  const navigate = useNavigate();
   const { ownerNotification, setOwnerNotification } = useSocket();
   const [markAsReadCall] = useMarkNotificationAsReadMutation();
   const { ownerInfo } = useSelector((state) => state.owner);
@@ -72,11 +73,12 @@ const NotificationListingOwner = () => {
 
                 {noti.link && (
                   <Button
+                    onClick={navigate(noti.link)}
                     className={
                       " bg-white hover:bg-black text-black hover:text-white"
                     }
                   >
-                    <Link to={noti.link}>View</Link>
+                    View
                   </Button>
                 )}
               </div>
