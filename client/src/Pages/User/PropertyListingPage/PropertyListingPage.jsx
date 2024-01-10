@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PropertyListing from "../../../components/Owner/PropertyListing/PropertyListing";
 import { Button, Typography } from "@material-tailwind/react";
 import { useGetPropertiesuserMutation } from "../../../Redux/Slices/userApi/usersApiSlice";
+import { Loader } from "../../../components/Dependencies/Loader/Loader";
 
 const PropertyListingPage = () => {
   const [getProperties] = useGetPropertiesuserMutation();
@@ -16,6 +17,8 @@ const PropertyListingPage = () => {
   const [locationFilter, setLocationFilter] = useState("All");
   const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [loading, setLoading] = useState(false);
 
   const indexOfLastProperty = currentPage * itemsPerPage;
   const indexOfFirstProperty = indexOfLastProperty - itemsPerPage;
@@ -32,6 +35,7 @@ const PropertyListingPage = () => {
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
       try {
         const res = await getProperties().unwrap();
         if (res.error) {
@@ -59,10 +63,12 @@ const PropertyListingPage = () => {
         }
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     getData();
-  }, [getProperties]);
+  }, []);
 
   const applyFilters = () => {
     let tempProperties = [...allProperties];
@@ -120,20 +126,10 @@ const PropertyListingPage = () => {
     const location = event.target.value;
     setLocationFilter(location);
   };
-  if (!filteredProperties) {
-    return (
-      <div className="lg:w-9/12 min-h-screen mb-10 p-3 flex items-center justify-center">
-        <div className=" h-10">
-          <div className="animate-spin h-20 w-20">
-            <div className="h-full w-full border-4 border-t-blue-100 border-b-blue-100 rounded-[50%]"></div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
+      {loading && <Loader />}
       <div className="flex justify-center min-h-screen py-10 bg-gray-50">
         <div className="w-10/12 xl:w-9/12 mx-auto flex flex-col md:flex-row gap-4">
           <div className="w-full block md:hidden border h-fit p-3 bg-white mt-4 lg:mt-0">
