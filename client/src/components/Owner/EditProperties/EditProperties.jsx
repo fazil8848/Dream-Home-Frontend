@@ -211,7 +211,6 @@ const EditProperties = () => {
         generateError("Error while Editing Property please try again");
         return;
       } else {
-        setEditLoading(false);
         generateSuccess("Property updated Successfully");
         setTimeout(() => {
           navigate("/owner/properties");
