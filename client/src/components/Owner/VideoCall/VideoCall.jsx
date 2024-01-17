@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { useAddNotificationOwnerMutation } from "../../../Redux/Slices/ownerApi/ownerApiSlice";
 
 export function getUrlParams(url = window.location.href) {
-  let urlStr = url.split("?")[1];
+  const urlStr = url.split("?")[1];
   return new URLSearchParams(urlStr);
 }
 
@@ -16,7 +16,7 @@ export default function VideoCall() {
   const [link, setLink] = useState("");
   const [sendNotificationCall] = useAddNotificationOwnerMutation();
 
-  let myMeeting = async (element) => {
+  const myMeeting = async (element) => {
     const appID = APP_ID;
     const serverSecret = ZEGO_SECRET;
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(

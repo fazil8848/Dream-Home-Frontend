@@ -243,8 +243,7 @@ const EditProperties = () => {
         setType(property.property_type);
         setRent(property.property_rent);
         setDetails(property.property_description);
-        const updatedImageUrls = property.ImageUrls.slice(1);
-        setImageUrls(updatedImageUrls);
+        setImageUrls(property.ImageUrls);
         setCoverImage(property.ImageUrls[0]);
         setCountry(property.property_location.country);
         setState(property.property_location.state);
