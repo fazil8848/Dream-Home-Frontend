@@ -127,7 +127,7 @@ const EditProperties = () => {
       setImageUrls(imageUrls);
 
       // Create property data
-       const propertyData = {
+      const propertyData = {
         property_name: tittle,
         property_type: type,
         property_rent: rent,
@@ -238,6 +238,7 @@ const EditProperties = () => {
         setRent(property.property_rent);
         setDetails(property.property_description);
         setImageUrls(property.ImageUrls);
+        setCoverImage(property.ImageUrls[0]);
         setCountry(property.property_location.country);
         setState(property.property_location.state);
         setDistrict(property.property_location.district);
