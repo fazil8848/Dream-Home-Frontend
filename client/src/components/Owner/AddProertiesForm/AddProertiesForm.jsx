@@ -117,6 +117,7 @@ const AddPropertiesForm = () => {
         const cloudinaryData = await cloudinaryResponse.json();
         urls.push(cloudinaryData.secure_url);
       }
+      console.log(urls);
 
       setImageUrls(urls);
 
@@ -125,7 +126,7 @@ const AddPropertiesForm = () => {
         property_type: type,
         property_rent: rent,
         property_description: details,
-        ImageUrls: [coverImage, ...ImageUrls],
+        ImageUrls: [coverImage, ...urls],
         doc,
         property_location: {
           country,
