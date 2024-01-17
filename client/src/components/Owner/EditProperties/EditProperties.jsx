@@ -17,6 +17,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { generateError, generateSuccess } from "../../Dependencies/toast";
 import GoogleMapComponent from "../../Dependencies/GoogleMap/GoogleMpa";
 import { Button } from "@material-tailwind/react";
+import { Loader } from "../../Dependencies/Loader/Loader";
 
 const EditProperties = () => {
   const [editLoading, setEditLoading] = useState(false);
@@ -67,6 +68,7 @@ const EditProperties = () => {
   const { id } = useParams();
   const [doc, setDoc] = useState("");
   const [coverImage, setCoverImage] = useState("");
+  const [editPropertiesLoading, setEditPropertiesLoading] = useState(false);
 
   const handleOptions = () => {
     if (options >= 4) {
@@ -78,9 +80,8 @@ const EditProperties = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setEditLoading(true);
     try {
-      setEditLoading(true);
-
       if (
         tittle.trim() === "" ||
         type.trim() === "" ||
@@ -367,6 +368,7 @@ const EditProperties = () => {
 
   return (
     <>
+      {editLoading && <Loader />}
       <div className="w-fullh-full p-4 ">
         <div className="">
           <h1 className="text-xl ">Add Properties</h1>
