@@ -68,7 +68,6 @@ const EditProperties = () => {
   const { id } = useParams();
   const [doc, setDoc] = useState("");
   const [coverImage, setCoverImage] = useState("");
-  const [editPropertiesLoading, setEditPropertiesLoading] = useState(false);
 
   const handleOptions = () => {
     if (options >= 4) {
@@ -78,6 +77,42 @@ const EditProperties = () => {
     }
   };
 
+  const uploadImagesToCloudinary = async () => {
+    const urls = [...ImageUrls];
+
+    for (let i = 0; i < images.length; i++) {
+      try {
+        const formData = new FormData();
+        formData.append("file", images[i]);
+        formData.append("folder", "propertyImages");
+        formData.append("upload_preset", "dreamhomeapp");
+
+        const cloudinaryResponse = await fetch(
+          "https://api.cloudinary.com/v1_1/dn6anfym7/image/upload",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const cloudinaryData = await cloudinaryResponse.json();
+
+        if (cloudinaryData.error) {
+          generateError(
+            `Failed to upload image to Cloudinary: ${cloudinaryData.error.message}`
+          );
+          return [];
+        }
+
+        const secureUrl = cloudinaryData.secure_url;
+        urls.push(secureUrl);
+      } catch (error) {
+        generateError(`Failed to upload image: ${error.message}`);
+      }
+    }
+
+    return urls;
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     setEditLoading(true);
@@ -124,10 +159,8 @@ const EditProperties = () => {
       }
 
       const imageUrls = await uploadImagesToCloudinary();
-      // Update property data with image URLs
       setImageUrls(imageUrls);
 
-      // Create property data
       const propertyData = {
         property_name: tittle,
         property_type: type,
@@ -172,10 +205,8 @@ const EditProperties = () => {
         },
       };
 
-      // Update property using backend API
       const res = await editproperties({ propertyData, id }).unwrap();
 
-      // Handle API response
       if (res.error) {
         generateError("Error while Editing Property please try again");
         return;
@@ -191,31 +222,6 @@ const EditProperties = () => {
     } finally {
       setEditLoading(false);
     }
-  };
-
-  const uploadImagesToCloudinary = async () => {
-    const urls = [...ImageUrls];
-
-    for (let i = 0; i < images.length; i++) {
-      const formData = new FormData();
-      formData.append("file", images[i]);
-      formData.append("folder", "propertyImages");
-      formData.append("upload_preset", "dreamhomeapp");
-
-      const cloudinaryResponse = await fetch(
-        "https://api.cloudinary.com/v1_1/dn6anfym7/image/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-
-      const cloudinaryData = await cloudinaryResponse.json();
-      const secureUrl = cloudinaryData.secure_url;
-      urls.push(secureUrl);
-    }
-
-    return urls;
   };
 
   const handLatLongWidowOpen = async () => {
@@ -238,7 +244,8 @@ const EditProperties = () => {
         setType(property.property_type);
         setRent(property.property_rent);
         setDetails(property.property_description);
-        setImageUrls(property.ImageUrls);
+        const updatedImageUrls = property.ImageUrls.slice(1);
+        setImageUrls(updatedImageUrls);
         setCoverImage(property.ImageUrls[0]);
         setCountry(property.property_location.country);
         setState(property.property_location.state);
