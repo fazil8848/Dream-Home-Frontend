@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
-import { APP_ID, ZEGO_SECRET } from "../../../Constants/Constants"; // Fix typo in the import path
+import { APP_ID, ZEGO_SECRET } from "../../../Constants/Contstants";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAddNotificationOwnerMutation } from "../../../Redux/Slices/ownerApi/ownerApiSlice";
