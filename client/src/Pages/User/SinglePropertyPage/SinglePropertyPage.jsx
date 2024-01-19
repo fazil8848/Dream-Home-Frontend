@@ -29,17 +29,13 @@ const SinglePropertyPage = () => {
     fetchProperty();
   }, []);
 
-  // if (!property) {
-  //   return (
-  //     <div className="border min-h-screen mb-10 p-3 flex items-center justify-center">
-  //       <div className=" h-10">
-  //         <div className="animate-spin h-20 w-20">
-  //           <div className="h-full w-full border-4 border-t-blue-100 border-b-blue-100 rounded-[50%]"></div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (!property) {
+    return (
+      <div className="border min-h-screen mb-10 p-3 flex items-center justify-center">
+        <div className=" h-10"></div>
+      </div>
+    );
+  }
 
   return (
     <>
