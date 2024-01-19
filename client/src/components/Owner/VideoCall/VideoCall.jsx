@@ -16,68 +16,60 @@ export default function VideoCall() {
   const [link, setLink] = useState("");
   const [sendNotificationCall] = useAddNotificationOwnerMutation();
 
-  useEffect(() => {
-    let zp;
+  const myMeeting = async (element) => {
+    const appID = APP_ID;
+    const serverSecret = ZEGO_SECRET;
+    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+      appID,
+      serverSecret,
+      roomID,
+      ownerInfo._id,
+      ownerInfo.name
+    );
 
-    const myMeeting = async (element) => {
-      const appID = APP_ID;
-      const serverSecret = ZEGO_SECRET;
-      const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
-        appID,
-        serverSecret,
-        roomID,
-        ownerInfo._id,
-        ownerInfo.name
-      );
+    setLink("/videocall/" + roomID + "?roomID=" + roomID);
 
-      setLink("/videocall/" + roomID + "?roomID=" + roomID);
-
-      zp = ZegoUIKitPrebuilt.create(kitToken);
-      zp.joinRoom({
-        container: element,
-        sharedLinks: [
-          {
-            name: "Call link",
-            url:
-              window.location.protocol +
-              "//" +
-              window.location.host +
-              window.location.pathname +
-              "?roomID=" +
-              roomID,
-          },
-        ],
-        scenario: {
-          mode: ZegoUIKitPrebuilt.OneONoneCall,
+    const zp = ZegoUIKitPrebuilt.create(kitToken);
+    zp.joinRoom({
+      container: element,
+      sharedLinks: [
+        {
+          name: "Call link",
+          url:
+            window.location.protocol +
+            "//" +
+            window.location.host +
+            window.location.pathname +
+            "?roomID=" +
+            roomID,
         },
-      });
-    };
+      ],
+      scenario: {
+        mode: ZegoUIKitPrebuilt.OneONoneCall,
+      },
+    });
+  };
 
-    const sendNotification = async () => {
-      try {
-        if (link === "") return;
-        const data = {
-          message: `Call From: ${ownerInfo.name}`,
-          sender: ownerInfo._id,
-          receiver: roomID, // Fix typo in the property name
-          link,
-        };
-        await sendNotificationCall(data).unwrap();
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
+  const sendNotification = async () => {
+    try {
+      if (link === "") return;
+      const data = {
+        message: `Call From: ${ownerInfo.name}`,
+        sender: ownerInfo._id,
+        reciever: roomID,
+        link,
+      };
+      await sendNotificationCall(data).unwrap();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-    const cleanup = () => {
-      if (zp) {
-        zp.leaveRoom();
-      }
-    };
+  useEffect(() => {
+    if (roomID !== ownerInfo._id) sendNotification();
+  }, [link]);
 
-    myMeeting(document.querySelector("#myMeeting"));
-
-    return cleanup;
-  }, [roomID, ownerInfo, link, sendNotificationCall]);
-
-  return <div id="myMeeting" style={{ width: "100vw", height: "100vh" }}></div>;
+  return (
+    <div ref={myMeeting} style={{ width: "100vw", height: "100vh" }}></div>
+  );
 }
