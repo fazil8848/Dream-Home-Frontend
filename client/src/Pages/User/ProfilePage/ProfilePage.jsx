@@ -1,13 +1,15 @@
-import React from 'react'
-import UserProfile from '../../../components/User/Profile/Profile'
+import React from "react";
+import UserProfile from "../../../components/User/Profile/Profile";
+import { Loader } from "../../../components/Dependencies/Loader/Loader";
 
 const UserProfilePage = () => {
+  const [loading, setLoading] = useState(false);
   return (
     <>
-      <UserProfile/>
+      {loading && <Loader />}
+      <UserProfile loading={loading} setLoading={setLoading} />
     </>
-  )
-}
+  );
+};
 
-export default UserProfilePage
-
+export default UserProfilePage;

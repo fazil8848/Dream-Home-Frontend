@@ -13,7 +13,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Link } from "react-router-dom";
 
-const UserProfile = () => {
+const UserProfile = ({ loading, setLoading }) => {
   const [getUsrInfoCall] = useGetUserInfoMutation();
   const [updateUserCall] = useUpdateUserMutation();
   const [checkPasswordCall] = useCheckPassMutation();
@@ -29,7 +29,6 @@ const UserProfile = () => {
   const [password, setPassword] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
   const [passVerified, setPassVerified] = useState(false);
-  const [checkPassLoading, setCheckPassLoading] = useState(false);
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -48,6 +47,7 @@ const UserProfile = () => {
   };
 
   const getUser = async () => {
+    setLoading(true);
     try {
       const result = await getUsrInfoCall(userInfo._id).unwrap();
       if (result.error) {
@@ -61,11 +61,14 @@ const UserProfile = () => {
       }
     } catch (error) {
       generateError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       if (
         email.trim() === "" ||
@@ -90,12 +93,14 @@ const UserProfile = () => {
       }
     } catch (error) {
       generateError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handlePassCheck = async (e) => {
     e.preventDefault();
-    setCheckPassLoading(true);
+    loading(true);
     try {
       if (currentPass.trim() === "") {
         generateError("Please Fill the password fields");
@@ -109,17 +114,14 @@ const UserProfile = () => {
 
       if (result.error) {
         generateError(result.error);
-        setCheckPassLoading(false);
       } else {
         generateSuccess(result.message);
         setPassVerified(true);
-        setCheckPassLoading(false);
       }
     } catch (error) {
       generateError(error.message);
-      setCheckPassLoading(false);
     } finally {
-      setCheckPassLoading(false);
+      setLoading(false);
     }
   };
 
@@ -127,6 +129,7 @@ const UserProfile = () => {
 
   const handlePasschange = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       if (password.trim() === "" || confirmPass.trim() === "") {
         generateError("Please Fill the password fields");
@@ -156,10 +159,13 @@ const UserProfile = () => {
       }
     } catch (error) {
       generateError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   const uploadImage = async (file) => {
+    setLoading(true);
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -187,16 +193,21 @@ const UserProfile = () => {
       generateError(
         `Failed to upload image to Cloudinary: ${cloudinaryData.error.message}`
       );
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleFileChange = async (e) => {
+    setLoading(true);
     try {
       const file = e.target.files[0];
       const url = await uploadImage(file);
       setProfilePic(url);
     } catch (error) {
       generateError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 

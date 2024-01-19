@@ -12,6 +12,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
 import { setCredentials } from "../../../Redux/Slices/authSlice";
+import { Loader } from "../../Dependencies/Loader/Loader";
 
 const Signup = () => {
   const [fisrtName, setFirstName] = useState("");
@@ -20,6 +21,7 @@ const Signup = () => {
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [user, setUser] = useState([]);
   const dispatch = useDispatch();
@@ -79,6 +81,7 @@ const Signup = () => {
     } else if (password !== confirmPassword) {
       return generateError("Please Enter Matching Passwords");
     } else {
+      setLoading(true);
       try {
         const res = await register({
           fisrtName,
@@ -99,6 +102,8 @@ const Signup = () => {
         }
       } catch (err) {
         toast.error(err?.data?.message || err.error);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -134,6 +139,7 @@ const Signup = () => {
 
   return (
     <>
+      {loading && <Loader />}
       <div className="w-full  border bg-gray-100">
         <div className="relative w-11/12 lg:w-7/12 md:w-9/12 mx-auto m-12 px-8 bg-white rounded-md shadow-md">
           <div className=" mx-auto ">
