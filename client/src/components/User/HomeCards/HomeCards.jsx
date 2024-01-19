@@ -24,7 +24,7 @@ export const HomeCards = ({ setLoading }) => {
     } catch (error) {
       generateError(error.message);
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
 
