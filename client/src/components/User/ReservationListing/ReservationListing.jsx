@@ -9,23 +9,25 @@ import { Link } from "react-router-dom";
 import { SiGooglemessages } from "react-icons/si";
 import { Button } from "@material-tailwind/react";
 
-const ReservationListing = () => {
+const ReservationListing = ({ loading, setLoading }) => {
   const [getReservetionsCall] = useGetReservationsMutation();
   const [cancelReservationCall] = useCancelReservationMutation();
   const { userInfo } = useSelector((state) => state.user);
   const [reservations, setReservations] = useState([]);
   const fetchReservations = async () => {
+    setLoading(true);
     try {
       const result = await getReservetionsCall(userInfo._id).unwrap();
       if (result.error) {
         generateError(result.error);
       } else {
-        console.log(result.reservations);
         setReservations(result.reservations);
       }
     } catch (error) {
       console.log(error);
       generateError(error.message);
+    } finally{
+      setLoading(false)
     }
   };
 

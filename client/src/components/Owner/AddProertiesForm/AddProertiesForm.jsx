@@ -12,6 +12,7 @@ import { Stepper, Step, Button } from "@material-tailwind/react";
 import { HomeIcon, CogIcon } from "@heroicons/react/24/outline";
 import { generateError, generateSuccess } from "../../Dependencies/toast";
 import GoogleMapComponent from "../../Dependencies/GoogleMap/GoogleMpa";
+import { Loader } from "../../Dependencies/Loader/Loader";
 
 const AddPropertiesForm = () => {
   const [addproperties, { isLoading, isError }] = useAddPropertiesMutation();
@@ -22,6 +23,7 @@ const AddPropertiesForm = () => {
   const [isFirstStep, setIsFirstStep] = React.useState(false);
   const [mapChoice, setMapChoice] = useState("");
 
+  const [editLoading, setEditLoading] = useState(false);
   const [tittle, setTittle] = useState("");
   const [type, setType] = useState("");
   const [rent, setRent] = useState(0);
@@ -61,6 +63,7 @@ const AddPropertiesForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setEditLoading(true);
     try {
       if (
         tittle.trim() === "" ||
@@ -180,6 +183,8 @@ const AddPropertiesForm = () => {
       }
     } catch (error) {
       console.log(error.data.error);
+    } finally {
+      setEditLoading(false);
     }
   };
 
@@ -260,6 +265,7 @@ const AddPropertiesForm = () => {
 
   return (
     <>
+      {editLoading && <Loader />}
       <div className="w-fullh-full p-4 ">
         <div className="">
           <h1 className="text-xl ">Add Properties</h1>

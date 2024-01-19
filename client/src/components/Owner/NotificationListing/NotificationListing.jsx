@@ -5,6 +5,7 @@ import { generateError, generateSuccess } from "../../Dependencies/toast";
 import { useMarkNotificationAsReadMutation } from "../../../Redux/Slices/userApi/usersApiSlice";
 import { useSelector } from "react-redux";
 import { Button } from "@material-tailwind/react";
+import { Loader } from "../../Dependencies/Loader/Loader";
 
 const NotificationListingOwner = () => {
   const navigate = useNavigate();
@@ -12,8 +13,10 @@ const NotificationListingOwner = () => {
   const [markAsReadCall] = useMarkNotificationAsReadMutation();
   const { ownerInfo } = useSelector((state) => state.owner);
   const userId = ownerInfo._id;
+  const [loading, setLoading] = useState(false);
 
   const handleMarkRead = async (id) => {
+    setLoading(true);
     try {
       const result = await markAsReadCall({ id, userId }).unwrap();
       if (result.error) {
@@ -26,10 +29,13 @@ const NotificationListingOwner = () => {
     } catch (error) {
       console.error(error);
       generateError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <>
+      {loading && <Loader />}
       <div className="w-screen flex justify-center py-10 min-h-screen">
         <div className="w-full flex flex-col gap-2 lg:w-1/3 md:w-3/4 bg-white border rounded-md shadow-lg h-fit p-10">
           <div className="mb-5">

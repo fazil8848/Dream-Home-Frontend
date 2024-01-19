@@ -9,8 +9,10 @@ import { FcGoogle } from "react-icons/fc";
 import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { GrUserAdmin } from "react-icons/gr";
+import { Loader } from "../../Dependencies/Loader/Loader";
 
 function OwnerLogin() {
+  const [editLoading, setEditLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, { isLoading, isError, isSuccess }] = useOwnerLoginMutation();
@@ -33,6 +35,7 @@ function OwnerLogin() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setEditLoading(true);
     try {
       if (email.trim() === "" || password.trim() === "") {
         return toast.error("Please fill out all the fields");
@@ -50,6 +53,8 @@ function OwnerLogin() {
       }
     } catch (err) {
       generateError(err?.data?.message || err.error);
+    } finally {
+      setEditLoading(false);
     }
   };
 
@@ -89,6 +94,7 @@ function OwnerLogin() {
 
   return (
     <>
+      {editLoading && <Loader />}
       <div className="min-h-[94vh] bg-gray-50 flex justify-center items-center">
         <div className=" md:flex gap-5 w-4/6 md:w-3/6 px-10 py-6 bg-white rounded-lg shadow-md">
           <div className="w-full lg:w-1/2">

@@ -6,7 +6,7 @@ import { useMarkNotificationAsReadMutation } from "../../../Redux/Slices/userApi
 import { useSelector } from "react-redux";
 import { Button } from "@material-tailwind/react";
 
-const NotificationListing = () => {
+const NotificationListing = ({ loading, setLoading }) => {
   const navigate = useNavigate();
   const { notification, setNotification } = useSocket();
   const [markAsReadCall] = useMarkNotificationAsReadMutation();

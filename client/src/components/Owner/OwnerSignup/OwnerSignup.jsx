@@ -11,8 +11,10 @@ import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
 import { setOwnerCredentials } from "../../../Redux/Slices/ownerApi/ownerAuthSlicel";
+import { Loader } from "../../Dependencies/Loader/Loader";
 
 const OwnerSignup = () => {
+  const [editLoading, setEditLoading] = useState(false);
   const [fisrtName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -78,6 +80,7 @@ const OwnerSignup = () => {
     } else if (password !== confirmPassword) {
       generateError("Please Enter Matching Passwords");
     } else {
+      setEditLoading(true);
       try {
         const res = await register({
           fisrtName,
@@ -98,6 +101,8 @@ const OwnerSignup = () => {
         }
       } catch (err) {
         toast.error(err?.data?.message || err.error);
+      } finally {
+        setEditLoading(false);
       }
     }
   };
@@ -133,6 +138,7 @@ const OwnerSignup = () => {
 
   return (
     <>
+      {editLoading && <Loader />}
       <div className="w-full  border bg-loginBg bg-cover bg-center pt-16">
         <div className="relative w-11/12 md:w-7/12 mx-auto m-12 px-8 bg-white-50 rounded-md shadow-2xl">
           <div className=" mx-auto ">

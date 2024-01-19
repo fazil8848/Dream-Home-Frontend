@@ -4,14 +4,17 @@ import { MdVilla } from "react-icons/md";
 import { useGetPropertiesMutation } from "../../../Redux/Slices/ownerApi/ownerApiSlice";
 import { useSelector } from "react-redux";
 import { generateError } from "../../Dependencies/toast";
+import { Loader } from "../../Dependencies/Loader/Loader";
 
 const Properties = () => {
   const [getProperties] = useGetPropertiesMutation();
   const { ownerInfo } = useSelector((state) => state.owner);
   const [properties, setProperties] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
+      setLoading(true);
       try {
         const res = await getProperties({ id: ownerInfo._id }).unwrap();
         if (res.error) {
@@ -22,6 +25,8 @@ const Properties = () => {
         }
       } catch (error) {
         console.log(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     getData();
@@ -29,6 +34,7 @@ const Properties = () => {
 
   return (
     <>
+      
       <div className="rounded-md border border-stroke bg-white shadow-default mb-4">
         <div className="py-3 px-4  flex items-center justify-between">
           <h4 className="text-xl font-semibold text-black ">Properties</h4>
@@ -97,5 +103,4 @@ const Properties = () => {
 export default Properties;
 
 {
-  
 }
