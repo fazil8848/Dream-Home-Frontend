@@ -32,17 +32,17 @@ export const HomeCards = ({ setLoading }) => {
     fetchProperties();
   }, []);
 
-  // if (!properties) {
-  //   return (
-  //     <div className="h-screen flex items-center justify-center">
-  //       <div className="h-10">
-  //         <div className="animate-spin h-20 w-20">
-  //           <div className="h-full w-full border-4 border-t-blue-100 border-b-blue-100 rounded-[50%]"></div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (!properties) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <div className="h-10">
+          <div className="animate-spin h-20 w-20">
+            <div className="h-full w-full border-4 border-t-blue-100 border-b-blue-100 rounded-[50%]"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="frame container mx-auto my-8 lg:px-8 ">
