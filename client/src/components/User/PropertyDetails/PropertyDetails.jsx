@@ -7,6 +7,7 @@ import { GoCheck, GoX } from "react-icons/go";
 import { HiOutlineDocumentCheck } from "react-icons/hi2";
 import GoogleMapUser from "../../Dependencies/GooleMapUser/GoogleMapUser";
 import { useNavigate } from "react-router-dom";
+import { generateError } from "../../Dependencies/toast";
 
 const PropertyDetails = ({ property, setProperty }) => {
   const navigate = useNavigate();
@@ -606,20 +607,37 @@ const PropertyDetails = ({ property, setProperty }) => {
         </button>
       </div>
       <div className="relative">
-        <button
-          onClick={() => navigate(`/booking/${property._id}`)}
-          className="z-20 text-white flex flex-col shrink-0 grow-0 justify-around 
+        {!property.is_Booked ? (
+          <button
+            onClick={() => navigate(`/booking/${property._id}`)}
+            className="z-20 text-white flex flex-col shrink-0 grow-0 justify-around 
                   fixed bottom-0 right-24 rounded-lg
                   mr-1 mb-5 lg:mr-5 lg:mb-5 xl:mr-10 xl:mb-10"
-        >
-          <div className="p-3 rounded-full border-4 border-white bg-blue-100">
-            <img
-              src="https://res.cloudinary.com/dn6anfym7/image/upload/v1701682746/dreamHome/icons/output-onlinepngtools_cax8u9.png"
-              alt=""
-              className="h-10"
-            />
-          </div>
-        </button>
+          >
+            <div className="p-3 rounded-full border-4 border-white bg-blue-100">
+              <img
+                src="https://res.cloudinary.com/dn6anfym7/image/upload/v1701682746/dreamHome/icons/output-onlinepngtools_cax8u9.png"
+                alt=""
+                className="h-10"
+              />
+            </div>
+          </button>
+        ) : (
+          <button
+            onClick={() => generateError("Property is already booked")}
+            className="z-20 text-white flex flex-col shrink-0 grow-0 justify-around 
+                  fixed bottom-0 right-24 rounded-lg
+                  mr-1 mb-5 lg:mr-5 lg:mb-5 xl:mr-10 xl:mb-10"
+          >
+            <div className="p-3 rounded-full border-4 border-white bg-gray-500">
+              <img
+                src="https://res.cloudinary.com/dn6anfym7/image/upload/v1701682746/dreamHome/icons/output-onlinepngtools_cax8u9.png"
+                alt=""
+                className="h-10"
+              />
+            </div>
+          </button>
+        )}
       </div>
     </div>
   );
