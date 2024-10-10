@@ -75,15 +75,15 @@ const Chat = () => {
 
       if (result.user) {
         if (conversationExists) {
-          // dispatch(
-          //   setSelectedOwnerConversation({
-          //     mock: conversationExists.mock,
-          //     _id: conversationExists._id,
-          //     ownerId: result.user._id,
-          //     ownerName: result.user.fullName,
-          //     profilePic: result.user.profilePic,
-          //   })
-          // );
+          dispatch(
+            setSelectedOwnerConversation({
+              mock: conversationExists.mock,
+              _id: conversationExists._id,
+              ownerId: result.user._id,
+              ownerName: result.user.fullName,
+              profilePic: result.user.profilePic,
+            })
+          );
         } else {
           const mockConversation = {
             mock: true,

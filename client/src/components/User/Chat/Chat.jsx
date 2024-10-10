@@ -56,6 +56,10 @@ const Chat = () => {
     fetchConversations();
   }, [userId]);
 
+  useEffect(() => {
+    setConversations(allConversations);
+  }, [allConversations]);
+
   const fetchClickedUser = async () => {
     try {
       const result = await getClickedOwnerCall({ ownerId }).unwrap();
@@ -67,15 +71,15 @@ const Chat = () => {
 
       if (conversationExists) {
         console.log(conversationExists);
-        // dispatch(
-        //   setSelectedUserConversation({
-        //     mock: conversationExists.mock,
-        //     _id: conversationExists._id,
-        //     ownerId: result.owner._id,
-        //     ownerName: result.owner.fullName,
-        //     profilePic: result.owner.profilePic,
-        //   })
-        // );
+        dispatch(
+          setSelectedUserConversation({
+            mock: conversationExists.mock,
+            _id: conversationExists._id,
+            ownerId: result.owner._id,
+            ownerName: result.owner.fullName,
+            profilePic: result.owner.profilePic,
+          })
+        );
       } else {
         const mockConversation = {
           mock: true,
