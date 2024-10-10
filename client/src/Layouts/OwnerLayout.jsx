@@ -32,7 +32,10 @@ const OwnerLayout = () => {
         <OwnerNav sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
         <div className="flex flex-1 flex-col overflow-y-auto overflow-x-auto card">
-          <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <OwnerHeader
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+          />
 
           <div
             className={`transition-margin duration-300 ${
