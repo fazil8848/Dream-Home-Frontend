@@ -29,7 +29,7 @@ export const SocketContextProvider = ({ children }) => {
       query.ownerId = ownerOnline._id;
     }
 
-    const newSocket = io("https://dreamhomes.walkwise.shop", {
+    const newSocket = io("https://drserver.conqod.site/", {
       query,
     });
 
